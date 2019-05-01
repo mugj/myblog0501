@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>{% block title %}{% endblock %}FIVE</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.css">
+    <style>
+    .post {
+        margin-bottom: 5px;
+    }
+
+{% comment %}    body {background-image:url('http://pic.90sjimg.com/design/00/37/78/65/55f0e6a7e29df.jpg');}{% endcomment %}
+    body {background-color: rgb(230, 238, 232);}
+    a:link {color:#000000;}      /* 未访问链接*/
+    a:visited {color:#000000;}  /* 已访问链接 */
+    a:hover {color:#0000CC;}  /* 鼠标移动到链接上 */
+    a:active {color:#FF3399;}  /* 鼠标点击时 */
+
+
+    </style>
+  </head>
+  <body>
+	<div class="container head">
+        <nav class="navbar  fixed-top navbar-expand-lg navbar-light bg-light"">
+          <a class="navbar-brand" href="/">首页</a>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                {% for cate in navs %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'category-list' cate.id %}">{{ cate.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+            <form class="form-inline my-2 my-lg-0" action="/search/" method="GET">
+              <input class="form-control mr-sm-2" type="search" name="keyword" placeholder="Search"
+                     value="{{ keyword }}" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">搜索</button>
+            </form>
+          </div>
+        </nav>
+        <div class="jumbotron">
+            <a href="{% url 'index' %}"><h1 class="display-4" >欢乐死肥宅</h1></a>
+
+            <p class="lead">每个傻逼都应该玩的垃圾游戏</p>
+
+        </div>
+	</div>
+
+    <div class="container main">
+        <div class="row">
+            <div class="col-9 post-list">
+                {% block main %}
+                {% endblock %}
+            </div>
+            <div class="col-3">
+                {% block sidebar %}
+                    {% for sidebar in sidebars %}
+                        <div class="card sidebar">
+                            <div class="card-body">
+                                <h4 class="card-title">{{ sidebar.title }}</h4>
+                                <p>{{ sidebar.content_html }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        {% block footer %}
+        <div class="container">
+            <hr/>
+            <nav class="nav category">
+                {% for cate in categories %}
+                    <a href="{% url 'category-list' cate.id %}" class="nav-link">{{ cate.name }}</a>
+                {% endfor %}
+            </nav>
+        </div>
+        <div class="container power">
+            <span class="text-muted">Power by Shabi@ECUST</span>
+        </div>
+        {% endblock %}
+    </footer>
+  </body>>
+</html>
